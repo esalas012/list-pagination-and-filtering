@@ -20,7 +20,7 @@ console.log("script js working");
 const pageItems = document.querySelectorAll(".student-item");
 const itemsPerPage = 10;
 
-function displayPage(list, page){
+function showPage(list, page){
   let start = (page * itemsPerPage) - itemsPerPage;
   let end = page * itemsPerPage;
 
@@ -35,7 +35,7 @@ function displayPage(list, page){
 
 }
 // displayPage(listItems, 1);
-function paginationLinks(list){
+function appendPageLinks(list){
   let numberOfPages = Math.ceil(list.length/itemsPerPage);
   const page = document.querySelector(".page");
   const pagination = document.createElement("div");
@@ -64,7 +64,7 @@ function paginationLinks(list){
       linkClicked.className = "active";
       let currentPage = parseInt(linkClicked.innerText);
       console.log(currentPage);
-      displayPage(pageItems, currentPage);
+      showPage(pageItems, currentPage);
     }
   }) 
 
@@ -74,6 +74,7 @@ function createSearchBar(){
   const pageHeader = document.querySelector(".page-header");
   pageHeader.style.textAlign = "right";
   const searchBar = document.createElement("input");
+  searchBar.className = "searchBar";
   searchBar.placeholder = "Search for students...";
   searchBar.style.display = "inline-block";
   searchBar.style.padding = "8px 15px"
@@ -81,6 +82,7 @@ function createSearchBar(){
   searchBar.style.border = "1px solid #eaeaea";
   searchBar.style.marginRight = "5px";
   const searchButton = document.createElement("button");
+  searchButton.className = "searchButton";
   searchButton.innerText = "Search";
   searchButton.style.dispaly = "inline-block";
   searchButton.style.fontSize = "14px";
@@ -94,10 +96,42 @@ function createSearchBar(){
 
 }
 
-
-displayPage(pageItems, 1);
-paginationLinks(pageItems);
+showPage(pageItems, 1);
+appendPageLinks(pageItems);
 createSearchBar();
+
+function search(){
+  const searchBar = document.querySelector(".searchBar");
+  let displayNone = false;
+  // const searchButton = document.querySelector(".searchButton");
+  for(let i =0; i<pageItems.length; i++){
+    const name = pageItems[i].querySelector("h3").innerText;
+    if(searchBar.value.toLowerCase() === name.toLowerCase()){
+      pageItems[i].style.display = "";
+    }
+    else{
+      pageItems[i].style.display = "none";
+      displayNone = true;
+    }
+  }
+  console.log(pageItems.length);
+  if(displayNone){
+    const studentList = document.querySelector(".student-list");
+      let noneFound = document.createElement("li");
+      noneFound.innerText = "Name not found";
+      noneFound.style.textAlign = "center";
+      studentList.appendChild(noneFound);
+  }
+
+  
+
+}
+
+document.querySelector(".searchButton").addEventListener("click", ()=>{
+  console.log("button has been clicked");
+  search();
+})
+
 
 
 
