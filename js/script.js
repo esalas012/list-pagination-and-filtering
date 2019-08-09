@@ -25,7 +25,7 @@ function displayPage(list, page){
   let end = page * itemsPerPage;
 
   for(let i=0; i<list.length; i++){
-    if((list.item(list[i]) >= start) && (list.item(list[i]) < end)){
+    if(i >= start && i < end){
       list[i].style.display = "block";
     }
     else{
@@ -34,9 +34,27 @@ function displayPage(list, page){
   }
 
 }
-displayPage(listItems, 1);
+// displayPage(listItems, 1);
 
+function createPaginationLinks(list){
+  let page = document.querySelector(".page");
+  let pagination = document.createElement("div");
+  pagination.className ="pagination";
+  let listOfPages = document.createElement("ul");
+  for(let i = 1; i<=5; i++){
+    let li = document.createElement("li");
+    let a = document.createElement("a");
+    a.href = "#";
+    if(i===1){
+      a.className = "active";
+    }
+    li.appendChild(a);
+    listOfPages.appendChild(li);
+  }
+  pagination.appendChild(listOfPages);
+  page.appendChild(pagination);
 
+}
 /*** 
    Create the `showPage` function to hide all of the items in the 
    list except for the ten you want to show.
