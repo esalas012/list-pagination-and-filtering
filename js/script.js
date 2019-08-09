@@ -17,7 +17,7 @@ FSJS project 2 - List Filter and Pagination
    scoped to that function.
 ***/
 console.log("script js working");
-const listItems = document.querySelectorAll(".student-item");
+const pageItems = document.querySelectorAll(".student-item");
 const itemsPerPage = 10;
 
 function displayPage(list, page){
@@ -35,16 +35,17 @@ function displayPage(list, page){
 
 }
 // displayPage(listItems, 1);
-
-function createPaginationLinks(list){
-  let page = document.querySelector(".page");
-  let pagination = document.createElement("div");
+function paginationLinks(list){
+  let numberOfPages = Math.ceil(list.length/itemsPerPage);
+  const page = document.querySelector(".page");
+  const pagination = document.createElement("div");
   pagination.className ="pagination";
-  let listOfPages = document.createElement("ul");
-  for(let i = 1; i<=5; i++){
+  const listOfPages = document.createElement("ul");
+  for(let i = 1; i<=numberOfPages; i++){
     let li = document.createElement("li");
     let a = document.createElement("a");
     a.href = "#";
+    a.innerText = i;
     if(i===1){
       a.className = "active";
     }
@@ -53,8 +54,38 @@ function createPaginationLinks(list){
   }
   pagination.appendChild(listOfPages);
   page.appendChild(pagination);
+  const links = document.querySelectorAll(".pagination a");
+  pagination.addEventListener("click", function(e){
+    let linkClicked = e.target;
+    if(e.target.tagName === "A"){
+      for(let i=0; i <links.length; i++){
+        links[i].classList.remove("active");
+      }
+      linkClicked.className = "active";
+      let currentPage = parseInt(linkClicked.innerText);
+      console.log(currentPage);
+      displayPage(pageItems, currentPage);
+    }
+  }) 
 
 }
+
+function createSearchBar(){
+  
+}
+displayPage(pageItems, 1);
+paginationLinks(pageItems);
+
+
+
+
+
+
+
+  
+  
+
+
 /*** 
    Create the `showPage` function to hide all of the items in the 
    list except for the ten you want to show.
