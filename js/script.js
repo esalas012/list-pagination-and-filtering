@@ -71,10 +71,33 @@ function paginationLinks(list){
 }
 
 function createSearchBar(){
-  
+  const pageHeader = document.querySelector(".page-header");
+  pageHeader.style.textAlign = "right";
+  const searchBar = document.createElement("input");
+  searchBar.placeholder = "Search for students...";
+  searchBar.style.display = "inline-block";
+  searchBar.style.padding = "8px 15px"
+  searchBar.style.borderRadius = "5px";
+  searchBar.style.border = "1px solid #eaeaea";
+  searchBar.style.marginRight = "5px";
+  const searchButton = document.createElement("button");
+  searchButton.innerText = "Search";
+  searchButton.style.dispaly = "inline-block";
+  searchButton.style.fontSize = "14px";
+  searchButton.style.backgroundColor = "#4ba6c3";
+  searchButton.style.color = "white";
+  searchButton.style.padding = "8px 15px";
+  searchButton.style.borderRadius = "5px";
+  searchButton.style.border = "1px solid #eaeaea";
+  pageHeader.appendChild(searchBar)
+  pageHeader.appendChild(searchButton);
+
 }
+
+
 displayPage(pageItems, 1);
 paginationLinks(pageItems);
+createSearchBar();
 
 
 
