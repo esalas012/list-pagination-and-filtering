@@ -100,35 +100,42 @@ showPage(pageItems, 1);
 appendPageLinks(pageItems);
 createSearchBar();
 
+
+
+let notFoundMessage = false;
+
 function search(){
-  const searchBar = document.querySelector(".searchBar");
-  let displayNone = false;
-  // const searchButton = document.querySelector(".searchButton");
+  const searchBarValue = document.querySelector(".searchBar").value.toLowerCase();
+  let notFoundCounter = 0;
   for(let i =0; i<pageItems.length; i++){
-    const name = pageItems[i].querySelector("h3").innerText;
-    if(searchBar.value.toLowerCase() === name.toLowerCase()){
+    const name = pageItems[i].querySelector("h3").innerText.toLowerCase();
+    if(name.indexOf(searchBarValue)> -1){
       pageItems[i].style.display = "";
     }
     else{
       pageItems[i].style.display = "none";
-      displayNone = true;
+      notFoundCounter++;
     }
   }
-  console.log(pageItems.length);
-  if(displayNone){
-    const studentList = document.querySelector(".student-list");
-      let noneFound = document.createElement("li");
-      noneFound.innerText = "Name not found";
-      noneFound.style.textAlign = "center";
-      studentList.appendChild(noneFound);
+  console.log(notFoundCounter + " ---- " + notFoundMessage)
+  if((notFoundCounter === pageItems.length) && (!notFoundMessage)){
+    console.log(notFoundCounter + " ---- " + notFoundMessage + "2nd message")
+    let noneFound = document.createElement("li");
+    noneFound.innerText = "Name not found";
+    noneFound.style.textAlign = "center";
+    document.querySelector(".student-list").appendChild(noneFound);
+    notFoundMessage = true;
   }
+  console.log("-------")
 
   
 
 }
 
 document.querySelector(".searchButton").addEventListener("click", ()=>{
-  console.log("button has been clicked");
+  search();
+})
+document.querySelector(".searchBar").addEventListener("keyup", ()=>{
   search();
 })
 
