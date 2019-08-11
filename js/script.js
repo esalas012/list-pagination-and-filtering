@@ -3,23 +3,10 @@ Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
    
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
-
-
-/*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
-***/
-console.log("script js working");
 const pageItems = document.querySelectorAll(".student-item");
 const itemsPerPage = 10;
 
+// Shows list items per page
 function showPage(list, page){
   let start = (page * itemsPerPage) - itemsPerPage;
   let end = page * itemsPerPage;
@@ -34,7 +21,8 @@ function showPage(list, page){
   }
 
 }
-// displayPage(listItems, 1);
+
+//adds pagination links at the bottom of the page
 function appendPageLinks(list){
   let numberOfPages = Math.ceil(list.length/itemsPerPage);
   const page = document.querySelector(".page");
@@ -55,9 +43,12 @@ function appendPageLinks(list){
   pagination.appendChild(listOfPages);
   page.appendChild(pagination);
   const links = document.querySelectorAll(".pagination a");
+
+  //adds the class name "active" to the link thats active and removes active
+  //from all the other links. Shows active link.
   pagination.addEventListener("click", function(e){
     let linkClicked = e.target;
-    if(e.target.tagName === "A"){
+    if(linkClicked.tagName === "A"){
       for(let i=0; i <links.length; i++){
         links[i].classList.remove("active");
       }
@@ -69,6 +60,7 @@ function appendPageLinks(list){
 
 }
 
+//Creates search bar and search button and appends it to the top of the page.
 function createSearchBar(){
   const pageHeader = document.querySelector(".page-header");
   pageHeader.style.textAlign = "right";
@@ -100,26 +92,23 @@ appendPageLinks(pageItems);
 createSearchBar();
 
 
-
-
-
 function search(e){
   const page = document.querySelector(".page");
   const searchBarValue = document.querySelector(".searchBar").value;
   const people =[];
 
+/*list is filtered by student name for those that include the search value.*/
   for(let i =0; i<pageItems.length; i++){
     const name = pageItems[i].querySelector("h3").innerText.toLowerCase();
     if(name.indexOf(searchBarValue.toLowerCase())> -1){
       pageItems[i].style.display = "";
-      people.push(pageItems[i]);
-      
+      people.push(pageItems[i]); 
     }
     else{
-      pageItems[i].style.display = "none";
-      
+      pageItems[i].style.display = "none"; 
     }
   }
+  //pagination links are removed and updated everytime the input value changes
   if(document.querySelector(".pagination")){
     page.removeChild(document.querySelector(".pagination"));
     showPage(people, 1);
@@ -128,17 +117,19 @@ function search(e){
   if(people.length >0 && document.querySelector(".message")){
     document.querySelector(".student-list").removeChild(document.querySelector(".message"));
   }
+  //the No Results message is displayed.
   if(!people.length > 0 && !document.querySelector(".message")){
-    noPersonFound();
+    noResults();
   }
   
 }
 
-function noPersonFound(){
+//creates and appends a no results message to the page.
+function noResults(){
   const studentList = document.querySelector(".student-list");
   let message = document.createElement("li");
   message.className = "message";
-  message.innerText = "Name not found";
+  message.innerText = "No Results";
   message.style.textAlign = "center";
   studentList.appendChild(message);
 
@@ -165,31 +156,3 @@ document.querySelector(".searchBar").addEventListener("keyup", (e)=>{
   
 
 
-/*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
-
-   Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function 
-***/
-
-
-
-
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
-
-
-
-
-
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
