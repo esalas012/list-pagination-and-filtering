@@ -135,10 +135,10 @@ function noResults(){
 
 }
 
-document.querySelector(".searchButton").addEventListener("click", ()=>{
+document.querySelector(".searchButton").addEventListener("click", function(){
   search();
 })
-document.querySelector(".searchBar").addEventListener("keyup", (e)=>{
+document.querySelector(".searchBar").addEventListener("keyup", function(e){
   search(e);
 })
 
