@@ -26,7 +26,7 @@ function showPage(list, page){
 
   for(let i=0; i<list.length; i++){
     if(i >= start && i < end){
-      list[i].style.display = "block";
+      list[i].style.display = "";
     }
     else{
       list[i].style.display = "none";
@@ -63,8 +63,7 @@ function appendPageLinks(list){
       }
       linkClicked.className = "active";
       let currentPage = parseInt(linkClicked.innerText);
-      console.log(currentPage);
-      showPage(pageItems, currentPage);
+      showPage(list, currentPage);
     }
   }) 
 
@@ -102,42 +101,58 @@ createSearchBar();
 
 
 
-let notFoundMessage = false;
 
-function search(){
-  const searchBarValue = document.querySelector(".searchBar").value.toLowerCase();
-  let notFoundCounter = 0;
+
+function search(e){
+  const page = document.querySelector(".page");
+  const searchBarValue = document.querySelector(".searchBar").value;
+  const people =[];
+
   for(let i =0; i<pageItems.length; i++){
     const name = pageItems[i].querySelector("h3").innerText.toLowerCase();
-    if(name.indexOf(searchBarValue)> -1){
+    if(name.indexOf(searchBarValue.toLowerCase())> -1){
       pageItems[i].style.display = "";
+      people.push(pageItems[i]);
+      
     }
     else{
       pageItems[i].style.display = "none";
-      notFoundCounter++;
+      
     }
   }
-  console.log(notFoundCounter + " ---- " + notFoundMessage)
-  if((notFoundCounter === pageItems.length) && (!notFoundMessage)){
-    console.log(notFoundCounter + " ---- " + notFoundMessage + "2nd message")
-    let noneFound = document.createElement("li");
-    noneFound.innerText = "Name not found";
-    noneFound.style.textAlign = "center";
-    document.querySelector(".student-list").appendChild(noneFound);
-    notFoundMessage = true;
+  if(document.querySelector(".pagination")){
+    page.removeChild(document.querySelector(".pagination"));
+    showPage(people, 1);
+    appendPageLinks(people);
   }
-  console.log("-------")
-
+  if(people.length >0 && document.querySelector(".message")){
+    document.querySelector(".student-list").removeChild(document.querySelector(".message"));
+  }
+  if(!people.length > 0 && !document.querySelector(".message")){
+    noPersonFound();
+  }
   
+}
+
+function noPersonFound(){
+  const studentList = document.querySelector(".student-list");
+  let message = document.createElement("li");
+  message.className = "message";
+  message.innerText = "Name not found";
+  message.style.textAlign = "center";
+  studentList.appendChild(message);
 
 }
 
 document.querySelector(".searchButton").addEventListener("click", ()=>{
   search();
 })
-document.querySelector(".searchBar").addEventListener("keyup", ()=>{
-  search();
+document.querySelector(".searchBar").addEventListener("keyup", (e)=>{
+  search(e);
 })
+
+
+
 
 
 
