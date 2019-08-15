@@ -60,7 +60,7 @@ function appendPageLinks(list){
 
 }
 
-//Creates search bar and search button and appends it to the top of the page.
+//Creates search-bar and search-button and appends them to the top of the page.
 function createSearchBar(){
   const pageHeader = document.querySelector(".page-header");
   pageHeader.style.textAlign = "right";
