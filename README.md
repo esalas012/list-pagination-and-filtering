@@ -1,8 +1,8 @@
 # List-Pagination-Filtering
 
 In this project I used a technique known as pagination to enhance the 
-user experience. These improvements follow a progressive enhacement strategy.
-This means that these improvements do not affect the core HTML and CSS 
+user experience. These improvements follow a progressive enhancement strategy.
+This means that these improvements do not affect the core HTML and CSS, 
 and will work with a list of any number of students.
 
 I added extra credit features to my project to earn an "Exceeds Expectations" grade.
